@@ -33,8 +33,11 @@ fi
 # fi
 
 # Wallpaper
-if [ -z "$(pgrep nitrogen)" ] ; then
-    nitrogen --restore &
+# if [ -z "$(pgrep nitrogen)" ] ; then
+#     nitrogen --restore &
+# fi
+if [ -z "$(pgrep variety)" ] ; then
+    variety &
 fi
 
 # Screensaver
@@ -47,6 +50,11 @@ if [ -z "$(pgrep compton)" ] ; then
     compton -b &
 fi
 
+# clipit
+if [ -z "$(pgrep clipit)" ] ; then
+    clipit &
+fi
+
 # Network Applet
 if [ -z "$(pgrep nm-applet)" ] ; then
     nm-applet &
@@ -56,5 +64,11 @@ fi
 if [ -z "$(pgrep insync)" ] ; then
     insync start &
 fi
+
+# remove idle cursor image from screen
+if [ -z "$(pgrep unclutter)" ] ; then
+    unclutter &
+fi
+
 # xbindkeys
 xbindkeys

@@ -34,6 +34,7 @@ import XMonad.Layout.WindowNavigation
 import XMonad.Layout.ZoomRow
 
 import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Cursor
 
@@ -47,7 +48,7 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal = "termite"
+myTerminal = "alacritty"
 
 -- The command to lock the screen or show the screensaver.
 myScreensaver = "dm-tool switch-to-greeter"
@@ -61,7 +62,7 @@ myScreenshot = "xfce4-screenshooter"
 
 -- The command to use as a launcher, to launch commands that don't have
 -- preset keybindings.
-myLauncher = "rofi -show"
+myLauncher = "dmenu_run"
 
 
 
@@ -265,7 +266,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Spawn the launcher using command specified by myLauncher.
   -- Use this to launch programs without a key binding.
-  , ((modMask, xK_p),
+  , ((modMask, xK_d),
      spawn myLauncher)
 
   -- Take a selective screenshot using the command specified by mySelectScreenshot.
@@ -375,12 +376,13 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
   -- Quit xmonad.
-  , ((modMask .|. shiftMask, xK_q),
+  , ((modMask .|. shiftMask, xK_x),
      io (exitWith ExitSuccess))
 
   -- Restart xmonad.
-  , ((modMask, xK_q),
-     restart "xmonad" True)
+ -- , ((modMask, xK_q),
+ --    restart "xmonad" True)
+    , ((modMask, xK_q     ), spawn "xmonad --recompile; xmonad --restart")
   ]
   ++
 
@@ -486,8 +488,9 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 myStartupHook = do
   setWMName "LG3D"
   spawn     "bash ~/.xmonad/startup.sh"
+  spawnOnce "volumeicon &"
   setDefaultCursor xC_left_ptr
-
+  spawnOnce "/snap/bin/emacs --daemon &"
 
 ------------------------------------------------------------------------
 -- Run xmonad with all the defaults we set up.
