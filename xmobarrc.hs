@@ -33,7 +33,12 @@ Config {
                                    , "-l", "lightblue"
                                    , "-n", "#bbc2cf"
                                    , "-h", "#aa4450"] 50
-
+                    , Run Weather "YSSY" ["-t","<station>: <tempC>C",
+                                          "-L","18","-H","25",
+                                          "--normal","green",
+                                          "--high","red",
+                                          "--low","lightblue"] 36000
+                    , Run Wireless "wlp58s0" [ "-t", "<essid>:<quality>" ] 10
                     -- battery monitor
                     , Run BatteryP       [ "BAT0" ]
                                          [ "--template" , "<fc=#B1DE76><fn=1></fn></fc> <acstatus>"
@@ -55,5 +60,5 @@ Config {
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% | %coretemp% | %memory% | %battery% | %dynnetwork% | %date%  |"   -- #69DFFA
+       , template = "%StdinReader% }{ %cpu% | %coretemp% | %memory% | %battery% | %dynnetwork% |%wlp58s0wi% | %date%  |%YSSY%|"   -- #69DFFA
        }
